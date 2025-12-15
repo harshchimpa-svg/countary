@@ -10,7 +10,7 @@ namespace Application.locations.Dto
     public class CreateLocationDto
     {
         public string Name { get; set; }
-        public string Code { get; set; }
+        public string Code { get; set; }    
         public int? ParentId { get; set; }
         public LocationType locationType { get; set; }
     }

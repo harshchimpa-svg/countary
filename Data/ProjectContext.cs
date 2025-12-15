@@ -9,9 +9,6 @@ namespace Data
         {
 
         }
-        public DbSet<Location> locations { get; set; }
-
+        public DbSet<Location> Locations { get; set; }
     }
-
-  
 }

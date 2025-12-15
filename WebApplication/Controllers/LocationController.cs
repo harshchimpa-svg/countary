@@ -5,16 +5,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ProductApplication.Controllers;
 
-[Route("api/Location")]
+[Route("api/location")]
 [ApiController]
 public class LocationController : ControllerBase
 {
-    private readonly ILocationApplications _locatin;
+    private readonly ILocationApplications _location;
 
     public LocationController(ILocationApplications location)
     {
-        _locatin = location;
-    }
+        _location = location;
+    }   
 
     [HttpPost]
     public async Task<IActionResult> Post(CreateLocationDto location)
@@ -35,35 +35,35 @@ public class LocationController : ControllerBase
                 return BadRequest("ParentId must be a valid existing Id");
             }
 
-            var parent = await _locatin.GetById(location.ParentId.Value);
+            var parent = await _location.GetById(location.ParentId.Value);
             if (parent == null)
             {
                 return BadRequest("Parent location does not exist");
             }
         }
 
-        var id = await _locatin.categary(location);
-        return Ok(id);
+        var id = await _location.Create(location);
+        return Ok(id);  
     }
 
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, CreateLocationDto dto)
     {
-        await _locatin.Update(id, dto);
+        await _location.Update(id, dto);
         return Ok("update successfully");
     }
 
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var locations = await _locatin.GetAll();
+        var locations = await _location.GetAll();
         return Ok(locations);
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {         
-        var location = await _locatin.GetById(id);
+        var location = await _location.GetById(id);
 
         if (location == null)
             return NotFound("location not found");
@@ -74,7 +74,7 @@ public class LocationController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-        await _locatin.delete(id);
+        await _location.Delete(id);
         return Ok("user deleted successfully!");
     }
 }

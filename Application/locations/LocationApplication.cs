@@ -7,36 +7,34 @@ namespace Application.locations
     public class LocationApplication : ILocationApplications
     {
 
-        private readonly ILocationRepostary _locationRepository;
-        public LocationApplication(ILocationRepostary locationRepositary)
+        private readonly ILocationRepository _locationRepository;
+        public LocationApplication(ILocationRepository locationRepository)
         {
-            _locationRepository = locationRepositary;
+            _locationRepository = locationRepository;
         }
 
-        public async Task<string> categary(CreateLocationDto dto)
+        public async Task<string> Create(CreateLocationDto dto)
         {
-            var locatin = new Location();
-            locatin.Name = dto.Name;
-            locatin.code = dto.Code;
-            locatin.ParentId = dto.ParentId;
-            locatin.LocationType = dto.locationType;
+            var location = new Location();
+            location.Name = dto.Name;
+            location.code = dto.Code;
+            location.ParentId = dto.ParentId;
+            location.LocationType = dto.locationType;
 
-            await _locationRepository.location(locatin);
+            await _locationRepository.location(location);
             return "Created Successfully";
         }
 
-        public async Task delete(int id)
+        public async Task Delete(int id)
         {
-
             await _locationRepository.Delete(id);
-
         }
         public async Task<List<Location>> GetAll()
         {
-            var locatin = await _locationRepository.GetAll();
-            return locatin;
+            var locations = await _locationRepository.GetAll();
+            return locations;
         }
-
+         
         public async Task<Location> GetById(int id)
         {
             return await _locationRepository.GetId(id);
@@ -44,12 +42,12 @@ namespace Application.locations
 
         public async Task Update(int LocationId, CreateLocationDto update)
         {
-            var locatin = await _locationRepository.GetId(LocationId);
+            var location = await _locationRepository.GetId(LocationId);
 
-            if (locatin == null)
-                throw new Exception("locatin not found");
+            if (location == null)
+                throw new Exception("location not found");
 
-            await _locationRepository.Update(locatin);
+            await _locationRepository.Update(location);
         }
     }
 }

@@ -2,11 +2,11 @@
 
 namespace Data.Locations;
 
-public interface ILocationRepostary
+public interface ILocationRepository
 {
     Task Delete(int id);
     Task<Location> GetId(int id);
-    Task Update(Location categary);
+    Task Update(Location location);
     Task<List<Location>> GetAll();
-    Task<Location> location(Location categary);
+    Task<Location> location(Location location);
 }
