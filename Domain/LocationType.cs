@@ -8,8 +8,8 @@ namespace Domain
 {
     public enum LocationType
     {
-        countary =1,
-        state = 2 ,
-        city = 3 ,
+        Country = 1,
+        State = 2 ,
+        City = 3 ,
     }
 }

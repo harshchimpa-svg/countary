@@ -5,71 +5,77 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ProductApplication.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/Location")]
 [ApiController]
-public class CategaryController : ControllerBase
+public class LocationController : ControllerBase
 {
-    private readonly ILocationApplications _Coustmor;
+    private readonly ILocationApplications _locatin;
 
-    public CategaryController(ILocationApplications categary)
+    public LocationController(ILocationApplications location)
     {
-        _Coustmor = categary;
+        _locatin = location;
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post(CreateLocationDto categary)
+    public async Task<IActionResult> Post(CreateLocationDto location)
     {
-        if (categary.locationType == LocationType.countary)
+        if (location.locationType == LocationType.Country)
         {
-            categary.ParentId = null;
+            location.ParentId = null;  
         }
         else
         {
-            if (categary.ParentId == null)
+            if (!location.ParentId.HasValue)
             {
                 return BadRequest("ParentId is required for State or City");
             }
 
-            var parent = await _Coustmor.GetById(categary.ParentId.Value);
+            if (location.ParentId.Value <= 0)
+            {
+                return BadRequest("ParentId must be a valid existing Id");
+            }
+
+            var parent = await _locatin.GetById(location.ParentId.Value);
             if (parent == null)
             {
                 return BadRequest("Parent location does not exist");
             }
         }
 
-        var id = await _Coustmor.categary(categary);
+        var id = await _locatin.categary(location);
         return Ok(id);
     }
 
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, CreateLocationDto dto)
     {
-        await _Coustmor.Update(id, dto);
+        await _locatin.Update(id, dto);
         return Ok("update successfully");
     }
 
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var data = await _Coustmor.GetAll();
-        return Ok(data);
+        var locations = await _locatin.GetAll();
+        return Ok(locations);
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
-    {
-        var employee = await _Coustmor.GetById(id);
+    {         
+        var location = await _locatin.GetById(id);
 
-        if (employee == null)
-            return NotFound("User not found");
+        if (location == null)
+            return NotFound("location not found");
 
-        return Ok(employee);
+        return Ok(location);
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-        await _Coustmor.delete(id);
+        await _locatin.delete(id);
         return Ok("user deleted successfully!");
     }
 }
+    

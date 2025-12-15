@@ -11,9 +11,8 @@ namespace Domain
         public int Id { get; set; }
         public string Name { get; set; }
         public string code { get; set; }
-        public int? parantId { get; set; }
+        public int? ParentId { get; set; }
         public Location Parent { get; set; }
-        public ICollection<Location> Children { get; set; }
         public LocationType LocationType { get; set; }
     }
 }

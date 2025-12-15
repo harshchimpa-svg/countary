@@ -1,10 +1,5 @@
 ﻿using Domain;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Data.Locations
 {
@@ -16,34 +11,34 @@ namespace Data.Locations
         {
             _context = context;
         }
-        public async Task DeleteUser(int id)
+        public async Task Delete(int id)
         {
-            var user = await _context.locations.FindAsync(id);
-            _context.locations.Remove(user);
+            var locatin = await _context.locations.FindAsync(id);
+            _context.locations.Remove(locatin);
             await _context.SaveChangesAsync();
         }
         public async Task<List<Location>> GetAll()
         {
 
-            var get = await _context.locations.ToListAsync();
-            return get;
+            var locatin = await _context.locations.ToListAsync();
+            return locatin;
         }
         public async Task<Location> GetId(int id)
         {
             return await _context.locations.FindAsync(id);
         }
-        public async Task<Location> categary(Location categary)
+        public async Task<Location> location(Location locatin)
         {
 
-            await _context.locations.AddAsync(categary);
+            await _context.locations.AddAsync(locatin);
             await _context.SaveChangesAsync();
 
-            return categary;
+            return locatin;
         }
 
-        public async Task Update(Location categary)
+        public async Task Update(Location locatin)
         {
-            _context.locations.Update(categary);
+            _context.locations.Update(locatin);
             await _context.SaveChangesAsync(); ;
         }
     }

@@ -12,4 +12,6 @@ namespace Data
         public DbSet<Location> locations { get; set; }
 
     }
+
+  
 }
